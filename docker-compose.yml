@@ -1,0 +1,8 @@
+version: '3'
+services:
+  app:
+    image: php:8.1-apache
+    ports:
+      - "8080:80" # Mapeando a porta 80 do container para a porta 8080 do host
+    volumes:
+      - ./src:/var/www/html # Mapeia o código PHP da pasta local 'src' para o diretório padrão do Apache no container

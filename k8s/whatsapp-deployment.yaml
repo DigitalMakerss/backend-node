@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whatsapp-microservice
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: whatsapp-microservice
+  template:
+    metadata:
+      labels:
+        app: whatsapp-microservice
+    spec:
+      containers:
+      - name: whatsapp-microservice
+        image: whatsapp-microservice:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DB_HOST
+          value: "betnext.cfkm8siwuqq1.sa-east-1.rds.amazonaws.com"
+        - name: DB_USER
+          value: "betadmin"
+        - name: DB_PASSWORD
+          value: "Cap0199**"
+        - name: DB_NAME
+          value: "whatsapp"
+        - name: RABBITMQ_URL
+          value: "amqp://user:password@rabbitmq:5672"  # Ajuste o username e password aqui

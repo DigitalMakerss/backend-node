@@ -1,0 +1,10 @@
+# k8s/rabbitmq-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-service
+spec:
+  ports:
+    - port: 5672
+  selector:
+    app: rabbitmq

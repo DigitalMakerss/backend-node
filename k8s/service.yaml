@@ -1,0 +1,11 @@
+# k8s/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: whatsapp-app
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3000
+  selector:
+    app: whatsapp-app

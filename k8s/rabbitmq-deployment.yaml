@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+  labels:
+    app: rabbitmq
+spec:
+  replicas: 1  # Número de réplicas que você deseja
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:3-management  # Usando a imagem RabbitMQ com plugin de gerenciamento
+        ports:
+        - containerPort: 5672  # Porta padrão para conexão
+        - containerPort: 15672  # Porta do painel de gerenciamento
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: "user"  # Usuário padrão
+        - name: RABBITMQ_DEFAULT_PASS
+          value: "password"  # Senha padrão
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+spec:
+  type: NodePort  # Altere para NodePort para expor o serviço
+  ports:
+  - name: rabbitmq-port  # Nome da porta para a conexão padrão
+    port: 5672
+    targetPort: 5672
+    protocol: TCP
+    nodePort: 30000  # Porta do host que será usada para acessar o RabbitMQ
+  - name: rabbitmq-management-port  # Nome da porta para o painel de gerenciamento
+    port: 15672
+    targetPort: 15672
+    protocol: TCP
+    nodePort: 30001  # Porta do host que será usada para acessar o painel de gerenciamento
+  selector:
+    app: rabbitmq

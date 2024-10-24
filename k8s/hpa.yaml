@@ -1,0 +1,12 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: whatsapp-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: whatsapp-app
+  minReplicas: 1
+  maxReplicas: 100  # Defina o limite superior de pods
+  targetCPUUtilizationPercentage: 70
